@@ -3,7 +3,7 @@ FROM php:8.2-fpm
 ARG user=hiyan
 ARG uid=1000
 
-# Instalar dependências do sistema
+# Instalar dependências do sistema e extensões PHP
 RUN apt-get update && apt-get install -y \
   git \
   curl \
@@ -19,14 +19,6 @@ RUN apt-get update && apt-get install -y \
 # Instalar extensões PHP
 RUN docker-php-ext-install mbstring exif pcntl bcmath gd sockets pdo_pgsql
 
-# Instalar Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Criar usuário do sistema
-RUN useradd -G www-data,root -u $uid -d /home/$user $user \
-  && mkdir -p /home/$user/.composer \
-  && chown -R $user:$user /home/$user
-
 # Instalar extensão Redis
 RUN pecl install -o -f redis \
   && rm -rf /tmp/pear \
@@ -40,9 +32,28 @@ RUN pecl install xdebug-3.2.0 \
 RUN echo 'xdebug.mode=coverage' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
   && echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+# Adicionar repositório NodeSource e instalar Node.js
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+  && apt-get install -y nodejs
+
+# Instalar NPM
+RUN curl -sL https://www.npmjs.com/install.sh | sh
+
+# Verificar a instalação do Node.js e do NPM
+RUN node --version \
+  && npm --version
+
+# Criar usuário do sistema
+RUN useradd -G www-data,root -u $uid -d /home/$user $user \
+  && mkdir -p /home/$user/.composer \
+  && chown -R $user:$user /home/$user
+
 WORKDIR /var/www
 
-# Copiar arquivos de configuração customizados
+# Instalar Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Copiar arquivos de configuração customizados e scripts
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 COPY permissions.sh ./permissions.sh
 
@@ -50,5 +61,4 @@ COPY permissions.sh ./permissions.sh
 RUN chmod +x ./permissions.sh \
   && ./permissions.sh
 
-# Definir usuário
 USER $user

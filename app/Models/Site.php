@@ -12,8 +12,22 @@ class Site extends Model
   use HasFactory, HasUuids;
 
   protected $fillable = [
+    'user_id',
     'url',
   ];
+
+  protected static function boot()
+  {
+    parent::boot();
+
+    static::creating(function ($site) {
+      $site->uuid = (string) \Illuminate\Support\Str::uuid();
+    });
+
+    static::addGlobalScope('user', function ($builder) {
+      $builder->where('user_id', auth()->id());
+    });
+  }
 
   public function user(): BelongsTo
   {

@@ -30,11 +30,11 @@ services:
         image: postgres:latest
         restart: unless-stopped
         environment:
-            POSTGRES_DB: ${DB_DATABASE:-laravel}
+            POSTGRES_DB: ${DB_DATABASE:-monitor}
             POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
-            POSTGRES_USER: ${DB_USERNAME:-username}
+            POSTGRES_USER: ${DB_USERNAME:-root}
         volumes:
-            - ./.docker/postgres/dbdata:/var/lib/postgresql/data
+            - pgdata:/var/lib/postgresql/data 
         ports:
             - "5432:5432"
         networks:
@@ -44,7 +44,10 @@ services:
         image: redis:latest
         networks:
             - laravel
-
+volumes:
+  pgdata:
+    driver: local
+    
 networks:
     laravel:
         driver: bridge

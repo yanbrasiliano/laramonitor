@@ -9,12 +9,13 @@ RUN apt-get update && apt-get install -y \
   libpng-dev \
   libonig-dev \
   libxml2-dev \
+  libpq-dev \  
   zip \
   unzip \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets
+RUN docker-php-ext-install mbstring exif pcntl bcmath gd sockets pdo_pgsql
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -32,6 +33,7 @@ COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 COPY permissions.sh ./permissions.sh
 
 RUN chmod +x ./permissions.sh \
-  && ./permissions.sh 
-  
+  && ./permissions.sh
+
+# Definir usuário
 USER $user

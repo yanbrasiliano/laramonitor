@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Site;
 use App\Repositories\SitesRepository;
 
 class SitesService
@@ -33,8 +34,8 @@ class SitesService
     return $this->sitesRepository->update($id, $data);
   }
 
-  public function delete($id)
+  public function delete(Site $site)
   {
-    return $this->sitesRepository->delete($id);
+    return $this->sitesRepository->delete($site);
   }
 }

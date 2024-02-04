@@ -32,7 +32,6 @@ Route::middleware('auth')
   ->prefix('admin')
   ->group(function () {
     Route::get('/sites', [SiteController::class, 'index'])->name('admin.sites.list');
-    Route::get('/sites/create', [SiteController::class, 'create'])->name('admin.sites.create');
     Route::post('/sites', [SiteController::class, 'store'])->name('admin.sites.store');
     Route::get('/sites/{site}', [SiteController::class, 'show'])->name('admin.sites.show');
     Route::get('/sites/{site}/edit', [SiteController::class, 'edit'])->name('admin.sites.edit');

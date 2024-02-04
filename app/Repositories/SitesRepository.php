@@ -29,9 +29,8 @@ class SitesRepository implements SitesRepositoryInterface
     return $site->update($data);
   }
 
-  public function delete($id)
+  public function delete(Site $site)
   {
-    $site = Site::find($id);
     return $site->delete();
   }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Models\Site;
 use App\Services\SitesService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SiteResource;
+use App\Http\Requests\StoreUpdateSiteRequest;
 
 class SiteController extends Controller
 {
@@ -18,18 +19,13 @@ class SiteController extends Controller
   }
   public function index()
   {
-    return SiteResource::collection($this->sitesService->all());
-    // return view('admin.sites.list', compact('sites'));
+    $sites = SiteResource::collection($this->sitesService->all());
+    return view('admin.sites.list', compact('sites'));
   }
 
-  public function create()
+  public function store(StoreUpdateSiteRequest $request)
   {
-    return view('admin.sites.create');
-  }
-
-  public function store(Request $request)
-  {
-    $this->sitesService->create($request->all());
+    $this->sitesService->create($request->validated());
     return redirect()->route('admin.sites.list');
   }
 
@@ -45,15 +41,15 @@ class SiteController extends Controller
     return view('admin.sites.edit', compact('site'));
   }
 
-  public function update(Request $request, $id)
+  public function update(StoreUpdateSiteRequest $request, $id)
   {
     $this->sitesService->update($id, $request->all());
     return redirect()->route('admin.sites.list');
   }
 
-  public function destroy($id)
+  public function destroy(Site $site)
   {
-    $this->sitesService->delete($id);
+    $this->sitesService->delete($site);
     return redirect()->route('admin.sites.list');
   }
 }

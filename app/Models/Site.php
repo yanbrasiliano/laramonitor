@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 
 class Site extends Model
 {
-  use HasFactory, HasUuids;
+  use HasFactory;
 
   protected $fillable = [
     'user_id',
@@ -21,11 +22,18 @@ class Site extends Model
     parent::boot();
 
     static::creating(function ($site) {
-      $site->uuid = (string) \Illuminate\Support\Str::uuid();
+      if (Auth::check()) {
+
+        $site->user_id = Auth::id();
+      }
+
+      $site->id = (string) Str::uuid();
     });
 
     static::addGlobalScope('user', function ($builder) {
-      $builder->where('user_id', auth()->id());
+      if (Auth::check()) {
+        $builder->where('user_id', Auth::id());
+      }
     });
   }
 

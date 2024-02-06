@@ -29,22 +29,12 @@ class SiteController extends Controller
     return redirect()->route('admin.sites.list');
   }
 
-  public function show($id)
+  public function update(StoreUpdateSiteRequest $request, $uuid)
   {
-    $site = $this->sitesService->find($id);
-    return view('admin.sites.show', compact('site'));
-  }
-
-  public function edit($id)
-  {
-    $site = $this->sitesService->find($id);
-    return view('admin.sites.edit', compact('site'));
-  }
-
-  public function update(StoreUpdateSiteRequest $request, $id)
-  {
-    $this->sitesService->update($id, $request->all());
-    return redirect()->route('admin.sites.list');
+    $this->sitesService->update($uuid, $request->all());
+    return response()->json([
+      'message' => 'Site updated successfully.'
+    ]);
   }
 
   public function destroy($uuid)

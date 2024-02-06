@@ -23,9 +23,9 @@ class SitesRepository implements SitesRepositoryInterface
     return Site::find($id);
   }
 
-  public function update($id, array $data)
+  public function update($uuid, array $data)
   {
-    $site = Site::find($id);
+    $site = Site::find($uuid);
     return $site->update($data);
   }
 

@@ -5,8 +5,8 @@
             <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Site</h3>
             <div class="mt-2 px-7 py-3">
                 <input type="url" id="edit-site-url" placeholder="Enter site URL"
-                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                    required>
+                    class="mt-1 block w-full px-4 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    required> <!-- Aumentado o padding interno -->
             </div>
             <div class="items-center px-4 py-3">
                 <button type="button" id="cancelEditBtn" onclick="closeEditModal()"

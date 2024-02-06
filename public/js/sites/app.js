@@ -15,6 +15,7 @@ function closeModal() {
 /*
   OPEN AND CLOSED MODAL DELETE FUNCTIONS ACTION
 */
+
 function openDeleteModal(siteId) {
   document.getElementById('deleteConfirmationModal').classList.remove('hidden');
   document.getElementById('confirmDeleteBtn').setAttribute('onclick', `confirmDelete('${siteId}')`);
@@ -31,8 +32,9 @@ function closeDeleteModal() {
 function openEditModal(siteUrl, siteUuid) {
   document.getElementById('edit-site-url').value = siteUrl;
   document.getElementById('modalEdit').classList.remove('hidden');
-  document.getElementById('saveEditBtn').setAttribute('data-uuid', siteUuid);
+  document.getElementById('saveEditBtn').onclick = () => updateSite(siteUuid);
 }
+
 
 function closeEditModal() {
   document.getElementById('modalEdit').classList.add('hidden');

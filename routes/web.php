@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\SiteController;
+use App\Http\Controllers\Admin\EndpointController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +32,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')
   ->prefix('admin')
   ->group(function () {
+    Route::resource('sites/{uuid}/endpoints', EndpointController::class);
     Route::get('/sites', [SiteController::class, 'index'])->name('admin.sites.list');
-    Route::post('/sites', [SiteController::class, 'store'])->name('admin.sites.store');
-    Route::get('/sites/{site}', [SiteController::class, 'show'])->name('admin.sites.show');
-    Route::get('/sites/{site}/edit', [SiteController::class, 'edit'])->name('admin.sites.edit');
-    Route::put('/sites/{site}', [SiteController::class, 'update'])->name('admin.sites.update');
-    Route::delete('/site/{uuid}', [SiteController::class, 'destroy'])->name('admin.sites.destroy');
+    Route::post('/site', [SiteController::class, 'store'])->name('admin.site.store');
+    Route::put('/site/{uuid}', [SiteController::class, 'update'])->name('admin.site.update');
+    Route::delete('/site/{uuid}', [SiteController::class, 'destroy'])->name('admin.site.destroy');
   });
 
 

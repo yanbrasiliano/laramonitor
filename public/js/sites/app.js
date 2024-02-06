@@ -12,4 +12,28 @@ function closeModal() {
 }
 
 
+/*
+  OPEN AND CLOSED MODAL DELETE FUNCTIONS ACTION
+*/
+function openDeleteModal(siteId) {
+  document.getElementById('deleteConfirmationModal').classList.remove('hidden');
+  document.getElementById('confirmDeleteBtn').setAttribute('onclick', `confirmDelete('${siteId}')`);
+}
 
+function closeDeleteModal() {
+  document.getElementById('deleteConfirmationModal').classList.add('hidden');
+}
+
+/*
+  OPEN AND CLOSED MODAL EDIT FUNCTIONS ACTION
+*/
+
+function openEditModal(siteUrl, siteUuid) {
+  document.getElementById('edit-site-url').value = siteUrl;
+  document.getElementById('modalEdit').classList.remove('hidden');
+  document.getElementById('saveEditBtn').setAttribute('data-uuid', siteUuid);
+}
+
+function closeEditModal() {
+  document.getElementById('modalEdit').classList.add('hidden');
+}

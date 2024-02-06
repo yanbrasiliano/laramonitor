@@ -47,9 +47,13 @@ class SiteController extends Controller
     return redirect()->route('admin.sites.list');
   }
 
-  public function destroy(Site $site)
+  public function destroy($uuid)
   {
+    $site = Site::where('id', $uuid)->firstOrFail();
     $this->sitesService->delete($site);
-    return redirect()->route('admin.sites.list');
+
+    return response()->json([
+      'message' => 'Site deleted successfully.'
+    ]);
   }
 }

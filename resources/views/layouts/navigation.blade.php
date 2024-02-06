@@ -12,16 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.sites.list')" :active="request()->routeIs('sites')">
+                    <x-nav-link :href="route('admin.sites.list')" :active="request()->routeIs('sites')" class="ml-8">
                         {{ __('Sites') }}
                     </x-nav-link>
                 </div>
+
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                </div> --}}
             </div>
 
             <!-- Settings Dropdown -->

@@ -36,7 +36,7 @@ Route::middleware('auth')
     Route::get('/sites/{site}', [SiteController::class, 'show'])->name('admin.sites.show');
     Route::get('/sites/{site}/edit', [SiteController::class, 'edit'])->name('admin.sites.edit');
     Route::put('/sites/{site}', [SiteController::class, 'update'])->name('admin.sites.update');
-    Route::delete('/sites/{site}', [SiteController::class, 'destroy'])->name('admin.sites.destroy');
+    Route::delete('/site/{uuid}', [SiteController::class, 'destroy'])->name('admin.sites.destroy');
   });
 
 

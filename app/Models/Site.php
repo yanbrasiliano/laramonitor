@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 
 class Site extends Model
 {
-  use HasFactory;
+  use  HasFactory, HasUuids;
 
   protected $fillable = [
     'user_id',
@@ -26,7 +27,6 @@ class Site extends Model
 
         $site->user_id = Auth::id();
       }
-
       $site->id = (string) Str::uuid();
     });
 

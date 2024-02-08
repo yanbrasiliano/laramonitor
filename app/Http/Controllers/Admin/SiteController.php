@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Site;
-use App\Services\SitesService;
+use App\Services\SiteService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SiteResource;
 use App\Http\Requests\StoreUpdateSiteRequest;
@@ -13,14 +13,14 @@ class SiteController extends Controller
 
   private $sitesService;
 
-  public function __construct(SitesService $sitesService)
+  public function __construct(SiteService $sitesService)
   {
     $this->sitesService = $sitesService;
   }
   public function index()
   {
     $sites = SiteResource::collection($this->sitesService->all());
-    return view('admin.sites.list', compact('sites'));
+    return view('admin.sites.index', compact('sites'));
   }
 
   public function store(StoreUpdateSiteRequest $request)

@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Services\EndpointService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class EndpointController extends Controller
 {
+  protected $endpointService;
+
+  public function __construct(EndpointService $endpointService)
+  {
+    $this->endpointService = $endpointService;
+  }
   public function index($uuid)
   {
-    return view('admin.endpoints.index', ['uuid' => $uuid]);
+    $endpoints =  $this->endpointService->findBySite($uuid);
+
+    return view('admin.endpoints.index', compact('endpoints'));
   }
 }

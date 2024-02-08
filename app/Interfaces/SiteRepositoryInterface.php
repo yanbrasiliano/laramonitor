@@ -4,7 +4,7 @@ namespace App\Interfaces;
 
 use App\Models\Site;
 
-interface SitesRepositoryInterface
+interface SiteRepositoryInterface
 {
   public function all();
   public function create(array $data);

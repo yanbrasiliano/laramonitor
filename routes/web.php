@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')
   ->prefix('admin')
   ->group(function () {
-    Route::resource('sites/{uuid}/endpoints', EndpointController::class);
+    Route::get('sites/{uuid}/endpoints', [EndpointController::class, 'index'])->name('admin.endpoints.list');
     Route::get('/sites', [SiteController::class, 'index'])->name('admin.sites.list');
     Route::post('/site', [SiteController::class, 'store'])->name('admin.site.store');
     Route::put('/site/{uuid}', [SiteController::class, 'update'])->name('admin.site.update');

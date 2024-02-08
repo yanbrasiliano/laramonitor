@@ -13,6 +13,7 @@ class Endpoint extends Model
   use HasFactory, HasUuids;
 
   protected $fillable = [
+    'site_id',
     'endpoint',
     'frequency',
     'next_check_at',

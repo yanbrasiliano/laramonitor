@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Models\Site;
-use App\Repositories\SitesRepository;
+use App\Repositories\SiteRepository;
 
-class SitesService
+class SiteService
 {
   private $sitesRepository;
 
-  public function __construct(SitesRepository $sitesRepository)
+  public function __construct(SiteRepository $sitesRepository)
   {
     $this->sitesRepository = $sitesRepository;
   }

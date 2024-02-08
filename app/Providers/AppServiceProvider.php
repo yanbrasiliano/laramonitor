@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
-use App\Services\SitesService;
-use App\Repositories\SitesRepository;
+use App\Services\EndpointService;
+use App\Services\SiteService;
+use App\Repositories\SiteRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\EndpointRepository;
+use App\Interfaces\SiteRepositoryInterface;
+use App\Interfaces\EndpointRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,9 +17,21 @@ class AppServiceProvider extends ServiceProvider
    */
   public function register(): void
   {
-    $this->app->singleton(SitesService::class, function ($app) {
-      return new SitesService(new SitesRepository());
-    });
+    /*
+     Register the services and repositories in the container.
+   */
+
+    $this->app->singleton(SiteService::class);
+    $this->app->singleton(SiteRepository::class);
+    $this->app->singleton(EndpointRepository::class);
+    $this->app->singleton(EndpointService::class);
+
+    /* 
+      Register the interfaces and repositories in the container.
+    */
+
+    $this->app->bind(SiteRepositoryInterface::class, SiteRepository::class);
+    $this->app->bind(EndpointRepositoryInterface::class, EndpointRepository::class);
   }
 
   /**
@@ -23,6 +39,5 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
-    //
   }
 }

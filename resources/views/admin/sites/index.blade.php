@@ -10,36 +10,27 @@
 </head>
 
 <body class="bg-gray-100">
-
     @include('layouts.navigation')
-
-
     <div class="container mx-auto my-8 max-w-4xl">
         <div class="flex justify-between items-center mb-4">
             <button onclick="openModal()"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
         </div>
 
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200" id="sites-table">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">URL
-                        </th>
-                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Action</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200 text-center"></tbody>
-            </table>
-            <div id="no-data" class="hidden text-center py-4 my-4">No data available at the moment.</div>
+        @component('components.table-layout', ['tableId' => 'sites-table'])
+            @slot('headers')
+                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            @endslot
+        @endcomponent
 
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div id="no-data" class="hidden text-center py-4 my-4">No data available at the moment.</div>
         </div>
     </div>
-    @include('admin.sites.components.modalCreate')
-    @include('admin.sites.components.modalConfirmDelete')
-    @include('admin.sites.components.modalEdit')
-
+    @include('admin.sites.components.modal-create')
+    @include('admin.sites.components.modal-confirm-delete')
+    @include('admin.sites.components.modal-edit')
 </body>
 
 <script src="{{ asset('js/sites/app.js') }}"></script>
@@ -59,7 +50,7 @@
             url.innerHTML = site.url;
             action.innerHTML =
                 `<div class="inline-flex">
-                  <a href="/sites/${site.id}/endpoints" title="View Endpoints">
+                  <a href="/admin/sites/${site.id}/endpoints" title="View Endpoints">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 hover:text-green-700 cursor-pointer mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.5 14l5 5m-11-5a7 7 0 1114 0 7 7 0 01-14 0z" />
                     </svg>
@@ -95,9 +86,10 @@
         closeDeleteModal();
     }
 
-    /*  CREAATE SITE */
+    /*  CREATE SITE */
 
     document.getElementById('add-site-form').addEventListener('submit', function(event) {
+        console.log('add-site-form');
         event.preventDefault();
         const url = document.getElementById('site-url').value;
         axios.post('{{ route('admin.site.store') }}', {

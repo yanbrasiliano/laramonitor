@@ -3,10 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Site;
-use App\Interfaces\SitesRepositoryInterface;
+use App\Interfaces\SiteRepositoryInterface;
 
 
-class SitesRepository implements SitesRepositoryInterface
+class SiteRepository implements SiteRepositoryInterface
 {
   public function all()
   {

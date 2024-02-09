@@ -89,7 +89,6 @@
     /*  CREATE SITE */
 
     document.getElementById('add-site-form').addEventListener('submit', function(event) {
-        console.log('add-site-form');
         event.preventDefault();
         const url = document.getElementById('site-url').value;
         axios.post('{{ route('admin.site.store') }}', {

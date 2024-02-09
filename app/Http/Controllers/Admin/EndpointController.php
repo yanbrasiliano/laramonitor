@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Site;
 use App\Services\EndpointService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateEndpointRequest;
 
 class EndpointController extends Controller
 {
@@ -15,8 +17,19 @@ class EndpointController extends Controller
   }
   public function index($uuid)
   {
-    $endpoints =  $this->endpointService->findBySite($uuid);
+    $site = Site::where('id', $uuid)->firstOrFail();
+    $endpoints = $site->endpoints;
+    return view('admin.endpoints.index', compact('endpoints', 'site'));
+  }
 
-    return view('admin.endpoints.index', compact('endpoints'));
+
+  public function store(StoreUpdateEndpointRequest $request, $uuid)
+  {
+    $site = Site::where('id', $uuid)->firstOrFail();
+    $data = $request->validated();
+
+    $endpoint = $this->endpointService->store($data, $site->id);
+
+    return $endpoint;
   }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,5 +32,9 @@ class Endpoint extends Model
   public function checks(): HasMany
   {
     return $this->hasMany(Check::class);
+  }
+  public function getNextCheckAtAttribute($value)
+  {
+    return Carbon::parse($value)->timezone(config('app.timezone'))->format('d/m/Y H:i');
   }
 }

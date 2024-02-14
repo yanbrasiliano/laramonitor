@@ -55,10 +55,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.5 14l5 5m-11-5a7 7 0 1114 0 7 7 0 01-14 0z" />
                     </svg>
                     </a>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6 text-blue-500 hover:text-blue-700 cursor-pointer mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" title="Editar" data-id="${site.id}" data-url="${site.url}">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 4.232a1.5 1.5 0 00-2.121 0l-6.899 6.899a1 1 0 00-.263.464l-1.414 5.657a1 1 0 001.263 1.263l5.657-1.414a1 1 0 00.464-.263l6.899-6.899a1.5 1.5 0 000-2.121l-2.121-2.121z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.5H8v.5h-.5v-.5zm4-4H12v.5h-.5v-.5z"/>
-                    </svg>
+                  w
                     <svg xmlns="http://www.w3.org/2000/svg" class="delete-icon h-6 w-6 text-red-500 hover:text-red-700 cursor-pointer" data-id="${site.id}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" title="Excluir">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                     </svg>

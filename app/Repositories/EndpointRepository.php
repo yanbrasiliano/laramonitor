@@ -17,4 +17,9 @@ class EndpointRepository implements EndpointRepositoryInterface
   {
     return Site::find($data['site_id'])->endpoints()->create($data);
   }
+
+  public function update($data, $uuid)
+  {
+    return Site::find($uuid)->endpoints()->update($data);
+  }
 }

@@ -12,7 +12,7 @@ class EndpointResource extends JsonResource
     return [
       'id' => $this->id,
       'site_id' => $this->site_id,
-      'endpoint' => $this->endpoint,
+      'url' => $this->endpoint,
       'frequency' => $this->frequency,
       'next_check_at' => $this->next_check_at ? Carbon::parse($this->next_check_at)->toDateTimeString() : null,
       'created_at' => $this->created_at,

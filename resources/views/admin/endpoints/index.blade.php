@@ -41,6 +41,7 @@
 <script src="{{ asset('js/endpoints/app.js') }}"></script>
 
 <script>
+    /*  LIST ALL ENDPOINTS */
     const endpoints = @json($endpoints);
     if (!endpoints.length) {
         document.getElementById('no-data').classList.remove('hidden');
@@ -50,17 +51,28 @@
             console.log(endpoint);
             let row = tbody.insertRow();
             let endpointCell = row.insertCell(0);
-            let frequencyCell = row.insertCell(1);
-            let nextVerificationCell = row.insertCell(2);
-            let actionCell = row.insertCell(3);
+            let frequency = row.insertCell(1);
+            let nextVerification = row.insertCell(2);
+            let action = row.insertCell(3);
 
-            endpointCell.innerHTML = endpoint.endpoint;
-            frequencyCell.innerHTML = endpoint.frequency;
-            nextVerificationCell.innerHTML = endpoint.next_check_at;
-            
+            endpointCell.innerHTML = endpoint.url;
+            frequency.innerHTML = endpoint.frequency == 1 ? '1 minute' : endpoint.frequency + ' minutes';
+            nextVerification.innerHTML = endpoint.next_check_at;
+
+            action.innerHTML =
+                `<div class="inline-flex">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6 text-blue-500 hover:text-blue-700 cursor-pointer mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" title="Editar" data-id="${endpoint.id}" data-url="${endpoint.endpoint}">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 4.232a1.5 1.5 0 00-2.121 0l-6.899 6.899a1 1 0 00-.263.464l-1.414 5.657a1 1 0 001.263 1.263l5.657-1.414a1 1 0 00.464-.263l6.899-6.899a1.5 1.5 0 000-2.121l-2.121-2.121z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 15.5H8v.5h-.5v-.5zm4-4H12v.5h-.5v-.5z"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 hover:text-red-700 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" title="Delete">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>`;
+
         });
     }
-    /*  CREATE SITE */
+    /*  CREATE ENDPOINT */
     document.getElementById('create-endpoint-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const endpoint = document.getElementById('endpoint-url').value;
@@ -78,7 +90,7 @@
             });
     });
 
-
+    /*  FORMAT MODAL ENDPOINT CREATE */
     document.addEventListener('DOMContentLoaded', (event) => {
         const url = '{{ $site->url }}';
         const baseUrlInput = document.getElementById('endpoint-url');
@@ -106,10 +118,19 @@
             baseUrlInput.setSelectionRange(completeText.length, completeText.length);
         });
 
-        // Quando o input ganha foco, move o cursor para o final do texto
+        // Set cursor position to the end of the input value when input is focused on for the first time. 
         baseUrlInput.addEventListener('focus', function(e) {
             const length = e.target.value.length;
             e.target.setSelectionRange(length, length);
+        });
+    });
+
+    /*  EDIT ENDPOINT */
+    document.querySelectorAll('.edit-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const endpointId = this.getAttribute('data-id');
+            const endpointUrl = this.getAttribute('data-url');
+            openEditModal(endpointId, endpointUrl);
         });
     });
 </script>

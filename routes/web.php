@@ -34,6 +34,7 @@ Route::middleware('auth')
   ->group(function () {
     Route::get('sites/{uuid}/endpoints', [EndpointController::class, 'index'])->name('admin.endpoints.list');
     Route::post('sites/{uuid}/endpoint', [EndpointController::class, 'store'])->name('admin.endpoint.store');
+    Route::put('sites/{uuid}/endpoint', [EndpointController::class, 'update'])->name('admin.endpoint.update');
 
     Route::get('/sites', [SiteController::class, 'index'])->name('admin.sites.list');
     Route::post('/site', [SiteController::class, 'store'])->name('admin.site.store');

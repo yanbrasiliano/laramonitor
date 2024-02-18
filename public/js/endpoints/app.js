@@ -16,20 +16,35 @@ function closeModal() {
 }
 
 /* OPEN AND CLOSE MODAL EDIT */
-function openEditModal(baseUrl, frequency) {
+function openEditModal(endpointId, endpointUrl, frequency) {
   document.getElementById('modal-edit').classList.remove('hidden');
-  const endpointInput = document.getElementById('endpoint-url-edit');
-  endpointInput.value = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-  endpointInput.focus();
-  endpointInput.setSelectionRange(endpointInput.value.length, endpointInput.value.length);
-  document.getElementById('endpoint-frequency-edit').value = frequency;
+
+  const endpointInput = document.getElementById('endpoint-edit-url');
+  const frequencyInput = document.getElementById('endpoint-edit-frequency');
+  const hiddenIdInput = document.getElementById('endpoint-id');
+
+  if (endpointInput && frequencyInput && hiddenIdInput) {
+    hiddenIdInput.value = endpointId;
+    endpointInput.value = endpointUrl;
+    frequencyInput.value = frequency;
+
+    endpointInput.focus();
+    endpointInput.setSelectionRange(endpointInput.value.length, endpointInput.value.length);
+
+    endpointInput.addEventListener('keydown', function (e) {
+      const slashIndex = this.value.indexOf('/');
+      console.log(slashIndex);
+      if (e.key === "Backspace" && this.selectionStart <= slashIndex + 1) {
+        e.preventDefault();
+      }
+    });
+  }
 }
+
+
 
 function closeModalEdit() {
   document.getElementById('modal-edit').classList.add('hidden');
-  document.getElementById('error-message-edit').classList.add('hidden');
-  document.getElementById('endpoint-url-edit').value = '';
-  document.getElementById('endpoint-url-edit').classList.remove('error');
-  document.getElementById('endpoint-frequency-edit').value = '';
+
 }
 

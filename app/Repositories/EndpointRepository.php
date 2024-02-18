@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Site;
+use App\Models\Endpoint;
 use App\Interfaces\EndpointRepositoryInterface;
 
 
@@ -18,8 +19,10 @@ class EndpointRepository implements EndpointRepositoryInterface
     return Site::find($data['site_id'])->endpoints()->create($data);
   }
 
-  public function update($data, $uuid)
+  public function update($data, $endpointId)
   {
-    return Site::find($uuid)->endpoints()->update($data);
+    $endpoint = Endpoint::findOrFail($endpointId);
+    $endpoint->update($data);
+    return $endpoint;
   }
 }

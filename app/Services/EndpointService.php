@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Site;
+use App\Models\Endpoint;
 use App\Http\Resources\EndpointResource;
 use App\Repositories\EndpointRepository;
 
@@ -36,19 +37,26 @@ class EndpointService
     return new EndpointResource($endpoint);
   }
 
-  private function existsEndpoint($siteId, $endpoint)
+  private function existsEndpoint($siteId, $endpointUrl)
   {
-    if (Site::find($siteId)->endpoints()->where('endpoint', $endpoint)->exists()) {
+    $site = Site::find($siteId);
+    if (!$site) {
+      throw new \Exception("Site not found.");
+    }
+
+    if ($site->endpoints()->where('url', $endpointUrl)->exists()) {
       throw new \Exception('Endpoint already exists.');
     }
   }
 
-  public function update($data, $siteId)
-  {
-    $data['next_check_at'] = now()->addMinutes($data['frequency']);
-    $this->existsEndpoint($siteId, $data['endpoint']);
 
-    $endpoint = $this->endpointRepository->update($data, $siteId);
+  public function update($data, $endpointId)
+  {
+    $endpoint = Endpoint::findOrFail($endpointId);
+
+    $data['next_check_at'] = now()->addMinutes($data['frequency']);
+
+    $endpoint->update($data);
 
     return new EndpointResource($endpoint);
   }

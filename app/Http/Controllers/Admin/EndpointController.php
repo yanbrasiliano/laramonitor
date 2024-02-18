@@ -34,13 +34,14 @@ class EndpointController extends Controller
 
     return $endpoint;
   }
-
-  public function update(StoreUpdateEndpointRequest $request, $uuid)
+  public function update(StoreUpdateEndpointRequest $request, $siteUuid, $endpointUuid)
   {
-    $site = Site::where('id', $uuid)->firstOrFail();
-    $data = $request->validated();
+    $site = Site::where('id', $siteUuid)->firstOrFail();
 
-    $endpoint = $this->endpointService->update($data, $site->id);
+    $endpoint = $site->endpoints()->where('id', $endpointUuid)->firstOrFail();
+
+    $data = $request->validated();
+    $endpoint = $this->endpointService->update($data, $endpoint->id);
 
     return $endpoint;
   }

@@ -25,4 +25,10 @@ class EndpointRepository implements EndpointRepositoryInterface
     $endpoint->update($data);
     return $endpoint;
   }
+
+  public function destroy($endpointId)
+  {
+    $endpoint = Endpoint::findOrFail($endpointId);
+    $endpoint->delete();
+  }
 }

@@ -44,20 +44,21 @@ class EndpointService
       throw new \Exception("Site not found.");
     }
 
-    if ($site->endpoints()->where('url', $endpointUrl)->exists()) {
+    if ($site->endpoints()->where('endpoint', $endpointUrl)->exists()) {
       throw new \Exception('Endpoint already exists.');
     }
   }
 
-
   public function update($data, $endpointId)
   {
     $endpoint = Endpoint::findOrFail($endpointId);
-
     $data['next_check_at'] = now()->addMinutes($data['frequency']);
-
     $endpoint->update($data);
-
     return new EndpointResource($endpoint);
+  }
+
+  public function destroy($endpointId)
+  {
+    $this->endpointRepository->destroy($endpointId);
   }
 }

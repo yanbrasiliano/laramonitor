@@ -11,27 +11,27 @@ use App\Http\Requests\StoreUpdateSiteRequest;
 class SiteController extends Controller
 {
 
-  private $sitesService;
+  private $siteService;
 
-  public function __construct(SiteService $sitesService)
+  public function __construct(SiteService $siteService)
   {
-    $this->sitesService = $sitesService;
+    $this->siteService = $siteService;
   }
   public function index()
   {
-    $sites = SiteResource::collection($this->sitesService->all());
+    $sites = SiteResource::collection($this->siteService->all());
     return view('admin.sites.index', compact('sites'));
   }
 
   public function store(StoreUpdateSiteRequest $request)
   {
-    $this->sitesService->create($request->validated());
+    $this->siteService->create($request->validated());
     return redirect()->route('admin.sites.list');
   }
 
   public function update(StoreUpdateSiteRequest $request, $uuid)
   {
-    $this->sitesService->update($uuid, $request->all());
+    $this->siteService->update($uuid, $request->all());
     return response()->json([
       'message' => 'Site updated successfully.'
     ]);
@@ -40,7 +40,7 @@ class SiteController extends Controller
   public function destroy($uuid)
   {
     $site = Site::where('id', $uuid)->firstOrFail();
-    $this->sitesService->delete($site);
+    $this->siteService->delete($site);
 
     return response()->json([
       'message' => 'Site deleted successfully.'

@@ -5,6 +5,6 @@
     'cancelText' => 'Cancel',
 ])
     @slot('slot')
-        <p class="text-sm text-gray-500">Are you sure you want to delete this site? This action cannot be undone.</p>
+        <p class="text-sm text-gray-500">Are you sure you want to delete this endpoint? This action cannot be undone.</p>
     @endslot
 @endcomponent

@@ -42,7 +42,6 @@ function openEditModal(endpointId, endpointUrl, frequency) {
 }
 
 
-
 function closeModalEdit() {
   document.getElementById('modal-edit').classList.add('hidden');
 

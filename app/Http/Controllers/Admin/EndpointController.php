@@ -7,6 +7,7 @@ use App\Services\EndpointService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EndpointResource;
 use App\Http\Requests\StoreUpdateEndpointRequest;
+use App\Models\Endpoint;
 
 class EndpointController extends Controller
 {
@@ -23,8 +24,6 @@ class EndpointController extends Controller
     return view('admin.endpoints.index', compact('endpoints', 'site'));
   }
 
-
-
   public function store(StoreUpdateEndpointRequest $request, $uuid)
   {
     $site = Site::where('id', $uuid)->firstOrFail();
@@ -34,6 +33,7 @@ class EndpointController extends Controller
 
     return $endpoint;
   }
+  
   public function update(StoreUpdateEndpointRequest $request, $siteUuid, $endpointUuid)
   {
     $site = Site::where('id', $siteUuid)->firstOrFail();
@@ -44,5 +44,14 @@ class EndpointController extends Controller
     $endpoint = $this->endpointService->update($data, $endpoint->id);
 
     return $endpoint;
+  }
+
+  public function destroy($endpointUuid)
+  {
+    $endpoint = Endpoint::where('id', $endpointUuid)->firstOrFail();
+
+    $this->endpointService->destroy($endpoint);
+
+    return response()->json(['message' => 'Endpoint deleted.']);
   }
 }

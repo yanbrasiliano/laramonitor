@@ -19,7 +19,7 @@ return new class extends Migration
       $table->timestamp('next_check_at');
       $table->timestamps();
 
-      $table->foreign('site_id')->references('id')->on('sites');
+      $table->foreign('site_id')->references('id')->on('sites')->onDelete('cascade');
     });
   }
 

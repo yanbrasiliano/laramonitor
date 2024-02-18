@@ -35,6 +35,7 @@ Route::middleware('auth')
     Route::get('sites/{uuid}/endpoints', [EndpointController::class, 'index'])->name('admin.endpoints.list');
     Route::post('site/{uuid}/endpoint', [EndpointController::class, 'store'])->name('admin.endpoint.store');
     Route::put('site/{siteUuid}/endpoint/{endpointUuid}', [EndpointController::class, 'update'])->name('admin.endpoint.update');
+    Route::delete('site/{siteUuid}/endpoint/{endpointUuid}', [EndpointController::class, 'destroy'])->name('admin.endpoint.destroy');
 
 
     Route::get('/sites', [SiteController::class, 'index'])->name('admin.sites.list');

@@ -33,7 +33,6 @@ function openEditModal(endpointId, endpointUrl, frequency) {
 
     endpointInput.addEventListener('keydown', function (e) {
       const slashIndex = this.value.indexOf('/');
-      console.log(slashIndex);
       if (e.key === "Backspace" && this.selectionStart <= slashIndex + 1) {
         e.preventDefault();
       }
@@ -41,9 +40,42 @@ function openEditModal(endpointId, endpointUrl, frequency) {
   }
 }
 
-
 function closeModalEdit() {
   document.getElementById('modal-edit').classList.add('hidden');
 
+}
+
+/* OPEN AND CLOSE MODAL DELETE */
+
+function openDeleteModal(endpointId, endpointUrl) {
+  const modal = document.getElementById('deleteEndpointConfirmationModal');
+  const confirmBtn = document.getElementById('deleteEndpointConfirmationModal-confirmBtn');
+  const endpointInput = document.getElementById('endpoint-delete-url');
+  const hiddenIdInput = document.getElementById('endpoint-delete-id');
+
+
+  if (modal && confirmBtn) {
+    modal.classList.remove('hidden');
+    confirmBtn.onclick = function () { confirmDelete(endpointId); };
+  } else {
+    console.error('Modal or confirm button not found in the DOM.');
+    return;
+  }
+
+  if (endpointInput && hiddenIdInput) {
+    hiddenIdInput.value = endpointId;
+    endpointInput.value = endpointUrl;
+  } else {
+    console.error('Required input elements not found in the DOM.');
+  }
+}
+
+function closeDeleteModal() {
+  const modal = document.getElementById('deleteEndpointConfirmationModal');
+  if (modal) {
+    modal.classList.add('hidden');
+  } else {
+    console.error('Modal not found in the DOM.');
+  }
 }
 

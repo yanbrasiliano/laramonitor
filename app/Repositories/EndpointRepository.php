@@ -26,9 +26,10 @@ class EndpointRepository implements EndpointRepositoryInterface
     return $endpoint;
   }
 
-  public function destroy($endpointId)
+  public function destroy($siteUuid, $endpointUuid)
   {
-    $endpoint = Endpoint::findOrFail($endpointId);
+    $endpoint = Endpoint::where('id', $endpointUuid)
+      ->where('site_id', $siteUuid)->firstOrFail();
     $endpoint->delete();
   }
 }

@@ -57,8 +57,8 @@ class EndpointService
     return new EndpointResource($endpoint);
   }
 
-  public function destroy($endpointId)
+  public function destroy($siteUuid, $endpointUuid)
   {
-    $this->endpointRepository->destroy($endpointId);
+    $this->endpointRepository->destroy($siteUuid, $endpointUuid);
   }
 }

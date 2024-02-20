@@ -33,7 +33,7 @@ class EndpointController extends Controller
 
     return $endpoint;
   }
-  
+
   public function update(StoreUpdateEndpointRequest $request, $siteUuid, $endpointUuid)
   {
     $site = Site::where('id', $siteUuid)->firstOrFail();
@@ -46,11 +46,10 @@ class EndpointController extends Controller
     return $endpoint;
   }
 
-  public function destroy($endpointUuid)
+  public function destroy($siteUuid, $endpointUuid)
   {
-    $endpoint = Endpoint::where('id', $endpointUuid)->firstOrFail();
 
-    $this->endpointService->destroy($endpoint);
+    $this->endpointService->destroy($siteUuid, $endpointUuid);
 
     return response()->json(['message' => 'Endpoint deleted.']);
   }

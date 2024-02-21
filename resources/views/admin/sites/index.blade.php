@@ -100,7 +100,8 @@
             })
             .catch(function(error) {
                 const errorMessageDiv = document.getElementById('error-message');
-                errorMessageDiv.innerText = 'Error adding site. Please try again.';
+                errorMessageDiv.innerText =
+                    'Error adding site. This site may already exist. Please try again.';
                 errorMessageDiv.classList.remove('hidden');
                 console.error(error);
             });
@@ -120,7 +121,7 @@
             })
             .catch(function(error) {
                 const errorMessageDiv = document.getElementById('error-message');
-                errorMessageDiv.innerText = 'Error update site. Please try again.';
+                errorMessageDiv.innerText = 'Error update site. This site may already exist. Please try again.';
                 errorMessageDiv.classList.remove('hidden');
                 console.error(error);
             });

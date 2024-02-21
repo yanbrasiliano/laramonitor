@@ -87,6 +87,10 @@
                 window.location.reload();
             })
             .catch(function(error) {
+                const errorMessageDiv = document.getElementById('error-message');
+                errorMessageDiv.innerText =
+                    'Error adding site. This site may already exist. Please try again.';
+                errorMessageDiv.classList.remove('hidden');
                 console.error(error);
             });
     });
@@ -151,6 +155,10 @@
                 window.location.reload();
             })
             .catch(function(error) {
+                const errorMessageDiv = document.getElementById('error-message');
+                errorMessageDiv.innerText =
+                    'Error adding site. This site may already exist. Please try again.';
+                errorMessageDiv.classList.remove('hidden');
                 console.error(error);
             });
     });

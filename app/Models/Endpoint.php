@@ -37,4 +37,27 @@ class Endpoint extends Model
   {
     return Carbon::parse($value)->timezone(config('app.timezone'))->format('d/m/Y H:i');
   }
+
+  public function url(): string
+  {
+    return $this->endpoint;
+  }
+
+  /**
+   * Record the result of the endpoint check.
+   *
+   * @param int $statusCode
+   * @param string $responseBody
+   */
+  protected function recordCheck(int $statusCode, string $responseBody): void
+  {
+    $this->endpoint->checks()->create([
+      'status_code' => $statusCode,
+      'response_body' => $responseBody,
+    ]);
+
+    $this->endpoint->update([
+      'next_check_at' => now()->addMinutes($this->endpoint->frequency),
+    ]);
+  }
 }

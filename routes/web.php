@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\EndpointController;
 |
 */
 
+
 Route::get('/', function () {
   return view('welcome');
 });

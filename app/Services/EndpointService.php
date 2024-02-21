@@ -61,4 +61,10 @@ class EndpointService
   {
     $this->endpointRepository->destroy($siteUuid, $endpointUuid);
   }
+
+  public function logs($endpoint)
+  { 
+    $endpoint = $this->endpointRepository->logs($endpoint);
+    return $endpoint;
+  }
 }

@@ -20,6 +20,7 @@ class EndpointController extends Controller
   public function index($uuid)
   {
     $site = Site::where('id', $uuid)->firstOrFail();
+    $this->authorize('owner', $site);
     $endpoints = EndpointResource::collection($site->endpoints);
     return view('admin.endpoints.index', compact('endpoints', 'site'));
   }
@@ -28,6 +29,8 @@ class EndpointController extends Controller
   {
     $site = Site::where('id', $uuid)->firstOrFail();
     $data = $request->validated();
+    $this->authorize('owner', $site);
+
 
     $endpoint = $this->endpointService->store($data, $site->id);
 
@@ -37,6 +40,7 @@ class EndpointController extends Controller
   public function update(StoreUpdateEndpointRequest $request, $siteUuid, $endpointUuid)
   {
     $site = Site::where('id', $siteUuid)->firstOrFail();
+    $this->authorize('owner', $site);
 
     $endpoint = $site->endpoints()->where('id', $endpointUuid)->firstOrFail();
 
@@ -52,5 +56,14 @@ class EndpointController extends Controller
     $this->endpointService->destroy($siteUuid, $endpointUuid);
 
     return response()->json(['message' => 'Endpoint deleted.']);
+  }
+
+  public function logs($endpoint)
+  {
+    $site = Site::where('id', $endpoint->site_id)->firstOrFail();
+    $this->authorize('owner', $site);
+
+    $logs = $this->endpointService->logs($endpoint);
+    return view('admin.endpoints.logs', compact('logs'));
   }
 }

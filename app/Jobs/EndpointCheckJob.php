@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\Endpoint;
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -41,9 +40,9 @@ class EndpointCheckJob implements ShouldQueue
     try {
       $response = $this->checkerService->check($url);
       $this->endpoint->recordCheck($response->status(), $response->successful() ? 'Successful Request' : $response->body());
-      Log::info("Endpoint check successful for URL: {$url}");
+      Log::channel('check')->info("Endpoint check succeeded for URL: {$url} with status: {$response->status()}");
     } catch (\Exception $e) {
-      Log::error("Endpoint check failed for URL: {$url}. Error: {$e->getMessage()}");
+      Log::channel('check')->error("Endpoint check failed for URL: {$url} with error: {$e->getMessage()}");
     }
   }
 }

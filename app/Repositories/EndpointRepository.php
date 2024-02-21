@@ -32,4 +32,10 @@ class EndpointRepository implements EndpointRepositoryInterface
       ->where('site_id', $siteUuid)->firstOrFail();
     $endpoint->delete();
   }
+
+  public function logs($endpoint)
+  {
+    $endpoint = Endpoint::with('checks')->find($endpoint);
+    return $endpoint;
+  }
 }

@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use App\Jobs\EndpointCheckJob;
 use App\Models\Endpoint;
 
-class CheckEndpoint extends Command
+class EndpointCheckCommand extends Command
 {
   protected $signature = 'endpoint:check {endpoint_id}';
   protected $description = 'Check a specific endpoint';

@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\CheckEndpoint; 
+use App\Console\Commands\EndpointCheckCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
    * @var array
    */
   protected $commands = [
-    CheckEndpoint::class, 
+    EndpointCheckCommand::class,
   ];
 
   /**
